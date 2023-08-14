@@ -48,15 +48,16 @@
 	      height="{{ $thumbnail.Height }}"
 	      class="lazyload"
 	      data-src="{{ $thumbnail.RelPermalink }}"
-	      {{ with $metadata }}
-		{{ if .ImageDescription }}
-		  alt="{{ .ImageDescription }}"
-		{{ else }}
-		  {{ if .Title }}
-		    alt="{{ .Title }}"
-		  {{ end }}
-		{{ end }}
-	      {{ end }}
+	      alt="{{- with $metadata -}}
+	        {{- if .Title -}} {{- .Title }}</br > {{ end -}}
+		{{- if .ImageDescription -}} {{- .ImageDescription }}</br > {{ end -}}
+		[{{- if .Model -}} {{- .Model }} + {{ end -}}
+		{{- if .LensModel -}} {{- .LensModel -}}; {{ end -}}
+		{{- if .FocalLength -}} {{- .FocalLength -}}mm {{ end }}
+		{{- if .ExposureTime -}} {{- .ExposureTime }}s {{ end -}}
+		{{- if .FNumber -}} f/{{- .FNumber }} {{ end -}}
+		{{- if .ISOSpeedRatings -}} ISO {{ .ISOSpeedRatings -}} {{- end -}}]
+	      {{- end -}}"
 	    />
 	    <meta itemprop="contentUrl" content="{{ $original.RelPermalink }}" />
 	    {{ with $.Site.Author }}
