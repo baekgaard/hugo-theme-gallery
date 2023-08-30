@@ -12,6 +12,7 @@
 	  {{ with $original.Exif }}
 	    {{ $metadata = merge .Tags $metadata }}
 	  {{ end }}
+	  {{ $filename := $original.RelPermalink | path.Base }}
 	  {{ $rotation := "" }}
 	  {{ with $metadata.Orientation }}
 	    {{ if or (eq . 8) (eq . 7) }}
@@ -49,14 +50,17 @@
 	      class="lazyload"
 	      data-src="{{ $thumbnail.RelPermalink }}"
 	      alt="{{- with $metadata -}}
-	        {{- if .Title -}} {{- .Title }}</br > {{ end -}}
+	        {{- if .Title -}} {{- .Title }}</br > {{else}} {{ $filename }} </br >{{ end -}}
 		{{- if .ImageDescription -}} {{- .ImageDescription }}</br > {{ end -}}
-		[{{- if .Model -}} {{- .Model }} + {{ end -}}
-		{{- if .LensModel -}} {{- .LensModel -}}; {{ end -}}
+		<small>
+                {{- if .DateTimeOriginal }} {{ .DateTimeOriginal | time.Format "2006-01-02 15:04" -}}</br >{{- end -}}
+		{{- if .Model -}} {{- .Model }} {{ end -}}
+		{{- if .LensModel }}+ {{ .LensModel -}}<br /> {{ end -}}
 		{{- if .FocalLength -}} {{- .FocalLength -}}mm {{ end }}
 		{{- if .ExposureTime -}} {{- .ExposureTime }}s {{ end -}}
 		{{- if .FNumber -}} f/{{- .FNumber }} {{ end -}}
-		{{- if .ISOSpeedRatings -}} ISO {{ .ISOSpeedRatings -}} {{- end -}}]
+		{{- if .ISOSpeedRatings -}} ISO {{ .ISOSpeedRatings -}} {{- end -}}
+                </small>
 	      {{- end -}}"
 	    />
 	    <meta itemprop="contentUrl" content="{{ $original.RelPermalink }}" />

@@ -14,6 +14,9 @@ other = "{{ .Count }} photos"
 [in]
 other = "dans"
 
+[and]
+other = "et"
+
 [albumCount]
 one = "1 album"
 other = "{{ .Count }} albums"

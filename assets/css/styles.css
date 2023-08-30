@@ -25,3 +25,12 @@ html.dark {
 img.lazyload:not([src]) {
   visibility: hidden;
 }
+
+.pswp__dynamic-caption {
+}
+
+.pswp__dynamic-caption small {
+  display: block;
+  font-size: small;
+  font-style: italic;
+}

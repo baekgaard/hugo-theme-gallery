@@ -1,5 +1,6 @@
 <div class="mb-12 mt-9 grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5">
-  {{ range where .Pages.ByDate.Reverse "Params.private" "ne" true }}
+  {{ $pages := sort .Pages (index .Params "album_sort_by" | default "Name") (.Params.album_sort_order | default "asc") }}
+  {{ range where $pages "Params.private" "ne" true }}
     {{ $images := .Resources.ByType "image" }}
     {{ if or (gt (len $images) 0) ($.Param "nodeGallery") }}
       {{ $featured := partial "featured" . }}
@@ -18,7 +19,7 @@
             </h5>
             <p class="text-sm font-normal text-neutral-600 dark:text-neutral-400">
               {{- i18n "photoCount" $counts.images }}
-              {{ if gt $counts.albums 0 }}{{ i18n "in" }} {{ i18n "albumCount" $counts.albums }}{{ end -}}
+              {{ if gt $counts.albums 0 }}{{ i18n "and" }} {{ i18n "albumCount" $counts.albums }}{{ end -}}
             </p>
           </div>
         </div>
