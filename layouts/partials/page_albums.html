@@ -1,5 +1,5 @@
 <div class="mb-12 mt-9 grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5">
-  {{ $pages := sort .Pages (index .Params "album_sort_by" | default "Name") (.Params.album_sort_order | default "asc") }}
+  {{ $pages := sort .Pages (.Params.album_sort_by | default "Date") (.Params.album_sort_order | default "desc") }}
   {{ range where $pages "Params.private" "ne" true }}
     {{ $images := .Resources.ByType "image" }}
     {{ if or (gt (len $images) 0) ($.Param "nodeGallery") }}
